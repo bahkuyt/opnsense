@@ -104,8 +104,8 @@ resource "azurerm_virtual_machine_extension" "example" {
 
   settings = <<SETTINGS
  {
-  "fileUris":
-  "commandToExecute": "hostname && uptime"
+  "fileUris": "https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/configureopnsense.sh"
+  "commandToExecute": "sh configureopnsense.sh"
  }
 SETTINGS
 
