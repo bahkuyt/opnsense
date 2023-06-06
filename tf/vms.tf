@@ -76,6 +76,7 @@ resource "azurerm_linux_virtual_machine" "nvavm" {
   size                = "Standard_B2s"
   admin_username      = "adminuser"
   admin_password      = "P@ssw0rd!1234&Azure"
+  disable_password_authentication = false
   network_interface_ids = [
     azurerm_network_interface.internal.id,
     azurerm_network_interface.external.id
@@ -85,7 +86,11 @@ resource "azurerm_linux_virtual_machine" "nvavm" {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
+  plan {
+    name = "13_1-release"
+    product = "freebsd-13_1"
+    publisher = "thefreebsdfoundation"
+  }
   source_image_reference {
     publisher = "thefreebsdfoundation"
     offer     = "freebsd-13_1"
@@ -94,8 +99,8 @@ resource "azurerm_linux_virtual_machine" "nvavm" {
   }
 }
 
-resource "azurerm_virtual_machine_extension" "example" {
-  name                 = "opnsense bootsrap installation"
+resource "azurerm_virtual_machine_extension" "opnsense_install" {
+  name                 = "opnsense"
   virtual_machine_id   = azurerm_linux_virtual_machine.nvavm.id
   publisher            = "Microsoft.OSTCExtensions"
   type                 = "CustomScriptForLinux"
@@ -104,13 +109,12 @@ resource "azurerm_virtual_machine_extension" "example" {
 
   settings = <<SETTINGS
  {
-  "fileUris": "https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/configureopnsense.sh"
-  "commandToExecute": "sh configureopnsense.sh"
+  "fileUris": ["https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/configureopnsense.sh"]
  }
 SETTINGS
-
-
-  tags = {
-    environment = "Production"
-  }
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+  "commandToExecute": "sh configureopnsense.sh"
+    }
+  PROTECTED_SETTINGS
 }
