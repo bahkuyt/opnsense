@@ -2,7 +2,7 @@
 
 fetch https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/config.xml
 fetch https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/get_nic_gw.py
-gwip=$(python get_nic_gw.py "10.1.100.0/24")
+gwip=$(python get_nic_gw.py "10.1.200.0/24")
 sed -i "" "s/yyy.yyy.yyy.yyy/$gwip/" config.xml
 sed -i "" "s_zzz.zzz.zzz.zzz_1.1.1.1/32_" config.xml
 cp config.xml /usr/local/etc/config.xml
