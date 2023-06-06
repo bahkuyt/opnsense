@@ -78,8 +78,8 @@ resource "azurerm_linux_virtual_machine" "nvavm" {
   admin_password      = "P@ssw0rd!1234&Azure"
   disable_password_authentication = false
   network_interface_ids = [
-    azurerm_network_interface.internal.id,
-    azurerm_network_interface.external.id
+    azurerm_network_interface.external.id,
+    azurerm_network_interface.internal.id    
   ]
 
   os_disk {
