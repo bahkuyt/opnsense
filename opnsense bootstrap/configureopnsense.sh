@@ -1,7 +1,7 @@
 #!/bin/sh
 
-fetch https://raw.githubusercontent.com/dmauser/opnazure/master/scripts/config.xml
-fetch https://raw.githubusercontent.com/dmauser/opnazure/master/scripts/get_nic_gw.py
+fetch https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/config.xml
+fetch https://raw.githubusercontent.com/bahkuyt/opnsense/main/opnsense%20bootstrap/get_nic_gw.py
 gwip=$(python get_nic_gw.py "10.1.100.0/24")
 sed -i "" "s/yyy.yyy.yyy.yyy/$gwip/" config.xml
 sed -i "" "s_zzz.zzz.zzz.zzz_1.1.1.1/32_" config.xml
